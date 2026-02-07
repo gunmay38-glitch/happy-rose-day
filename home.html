@@ -1,72 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Happy Rose Day</title>
-    <style>
-        body {
-            background: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            color: pink;
-            font-family: 'Segoe UI', sans-serif;
-        }
+<meta charset="UTF-8">
+<title>Happy Rose Day</title>
+<style>
+    body {
+        background: #0b0b0b;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        font-family: monospace;
+    }
 
-        canvas {
-            border: 1px solid #333;
-        }
+    canvas {
+        image-rendering: pixelated;
+    }
 
-        h1 {
-            margin-top: 20px;
-            opacity: 0;
-            transition: opacity 2s;
-        }
-    </style>
+    h1 {
+        color: #ff4d6d;
+        margin-top: 20px;
+        opacity: 0;
+        transition: opacity 2s;
+    }
+</style>
 </head>
 <body>
 
-<canvas id="canvas" width="400" height="400"></canvas>
-<h1 id="text">🌹 Happy Rose Day 🌹</h1>
+<canvas id="canvas" width="300" height="300"></canvas>
+<h1 id="msg">🌹 Happy Rose Day 🌹</h1>
 
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const pixel = 6;
 
-ctx.fillStyle = "red";
+// SIDE VIEW ROSE (pixel art)
+const rosePixels = [
+    // flower head
+    {x:20,y:8,c:"#b3001b"}, {x:21,y:8,c:"#b3001b"},
+    {x:19,y:9,c:"#d90429"}, {x:20,y:9,c:"#d90429"}, {x:21,y:9,c:"#d90429"},
+    {x:18,y:10,c:"#ef233c"}, {x:19,y:10,c:"#d90429"}, {x:20,y:10,c:"#b3001b"},
+    {x:21,y:10,c:"#b3001b"}, {x:22,y:10,c:"#d90429"},
+    {x:18,y:11,c:"#ef233c"}, {x:19,y:11,c:"#d90429"},
+    {x:20,y:11,c:"#b3001b"}, {x:21,y:11,c:"#d90429"},
 
-let points = [];
-let scale = 10;
-let centerX = canvas.width / 2;
-let centerY = canvas.height / 2;
+    // sepals
+    {x:19,y:12,c:"#2b9348"}, {x:20,y:12,c:"#2b9348"},
+    {x:21,y:12,c:"#2b9348"},
 
-// Rose curve equation: r = cos(kθ)
-for (let theta = 0; theta < Math.PI * 2; theta += 0.02) {
-    let r = Math.cos(4 * theta);
-    let x = r * Math.cos(theta);
-    let y = r * Math.sin(theta);
-    points.push({
-        x: centerX + x * scale * 10,
-        y: centerY - y * scale * 10
-    });
-}
+    // stem
+    {x:20,y:13,c:"#2b9348"},
+    {x:20,y:14,c:"#2b9348"},
+    {x:20,y:15,c:"#2b9348"},
+    {x:20,y:16,c:"#2b9348"},
+    {x:20,y:17,c:"#2b9348"},
+    {x:20,y:18,c:"#2b9348"},
+
+    // leaf
+    {x:19,y:15,c:"#40916c"},
+    {x:18,y:16,c:"#40916c"},
+    {x:17,y:17,c:"#40916c"},
+    {x:18,y:17,c:"#40916c"},
+    {x:19,y:16,c:"#40916c"},
+];
 
 let i = 0;
 
-function drawPixel() {
-    if (i < points.length) {
-        ctx.fillRect(points[i].x, points[i].y, 3, 3);
+function draw() {
+    if (i < rosePixels.length) {
+        const p = rosePixels[i];
+        ctx.fillStyle = p.c;
+        ctx.fillRect(p.x * pixel, p.y * pixel, pixel, pixel);
         i++;
-        requestAnimationFrame(drawPixel);
+        setTimeout(draw, 50); // pixel-by-pixel speed
     } else {
-        document.getElementById("text").style.opacity = 1;
+        document.getElementById("msg").style.opacity = 1;
     }
 }
 
-drawPixel();
+draw();
 </script>
 
 </body>
