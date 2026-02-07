@@ -29,17 +29,16 @@
 </head>
 <body>
 
-<canvas id="canvas" width="300" height="300"></canvas>
+<canvas id="canvas" width="120" height="120"></canvas>
 <h1 id="msg">🌹 Happy Rose Day 🌹</h1>
 
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const pixel = 6;
+const pixel = 5;
 
 // SIDE VIEW ROSE (pixel art)
 const rosePixels = [
-    // flower head
     {x:20,y:8,c:"#b3001b"}, {x:21,y:8,c:"#b3001b"},
     {x:19,y:9,c:"#d90429"}, {x:20,y:9,c:"#d90429"}, {x:21,y:9,c:"#d90429"},
     {x:18,y:10,c:"#ef233c"}, {x:19,y:10,c:"#d90429"}, {x:20,y:10,c:"#b3001b"},
@@ -47,11 +46,9 @@ const rosePixels = [
     {x:18,y:11,c:"#ef233c"}, {x:19,y:11,c:"#d90429"},
     {x:20,y:11,c:"#b3001b"}, {x:21,y:11,c:"#d90429"},
 
-    // sepals
     {x:19,y:12,c:"#2b9348"}, {x:20,y:12,c:"#2b9348"},
     {x:21,y:12,c:"#2b9348"},
 
-    // stem
     {x:20,y:13,c:"#2b9348"},
     {x:20,y:14,c:"#2b9348"},
     {x:20,y:15,c:"#2b9348"},
@@ -59,7 +56,6 @@ const rosePixels = [
     {x:20,y:17,c:"#2b9348"},
     {x:20,y:18,c:"#2b9348"},
 
-    // leaf
     {x:19,y:15,c:"#40916c"},
     {x:18,y:16,c:"#40916c"},
     {x:17,y:17,c:"#40916c"},
@@ -75,7 +71,7 @@ function draw() {
         ctx.fillStyle = p.c;
         ctx.fillRect(p.x * pixel, p.y * pixel, pixel, pixel);
         i++;
-        setTimeout(draw, 50); // pixel-by-pixel speed
+        setTimeout(draw, 50);
     } else {
         document.getElementById("msg").style.opacity = 1;
     }
@@ -86,3 +82,4 @@ draw();
 
 </body>
 </html>
+
