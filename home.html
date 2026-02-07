@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Rose Day</title>
+    <style>
+        body {
+            background: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: pink;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        canvas {
+            border: 1px solid #333;
+        }
+
+        h1 {
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas" width="400" height="400"></canvas>
+<h1 id="text">🌹 Happy Rose Day 🌹</h1>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+ctx.fillStyle = "red";
+
+let points = [];
+let scale = 10;
+let centerX = canvas.width / 2;
+let centerY = canvas.height / 2;
+
+// Rose curve equation: r = cos(kθ)
+for (let theta = 0; theta < Math.PI * 2; theta += 0.02) {
+    let r = Math.cos(4 * theta);
+    let x = r * Math.cos(theta);
+    let y = r * Math.sin(theta);
+    points.push({
+        x: centerX + x * scale * 10,
+        y: centerY - y * scale * 10
+    });
+}
+
+let i = 0;
+
+function drawPixel() {
+    if (i < points.length) {
+        ctx.fillRect(points[i].x, points[i].y, 3, 3);
+        i++;
+        requestAnimationFrame(drawPixel);
+    } else {
+        document.getElementById("text").style.opacity = 1;
+    }
+}
+
+drawPixel();
+</script>
+
+</body>
+</html>
